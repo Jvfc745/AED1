@@ -1,8 +1,9 @@
+//Base do codigo pela apostila Algoritmos em C do Paulo Feofiloff
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
-#define Total 5
+#define Total 5000
 
 
 void swap(int *a, int *b)
