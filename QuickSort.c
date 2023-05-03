@@ -1,3 +1,4 @@
+//Base do codigo pela apostila Algoritmos em C do Paulo Feofiloff
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
