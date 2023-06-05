@@ -10,39 +10,31 @@ typedef struct{
 node g[124760];
 int p[124750];
 
-int comp(node *a, node *b)
-{
-	return a->z - b->z;
-}
-
 int item(int i)
 {
 	if (i == p[i])
 		return i;
-	
 	return item(p[i]);
 }
 
 int kruskal(int f)
 {
-
 	int i;
 	int r;
 	int x;
 	int y;
-	
 	for (i = 0, r = 0; i < f; ++i)
 	{
 		x = item(g[i].x);
 		y = item(g[i].y);
-
 		if (x != y)
 			p[y] = p[x], r += g[i].z;
-
 	}
-
 	return r;
-
+}
+int comp(node *a, node *b)
+{
+	return a->z - b->z;
 }
 int main(){
     
