@@ -1,0 +1,64 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct{
+	int x;
+	int y;
+	int z;
+} node;
+
+node g[124760];
+int p[124750];
+
+int comp(node *a, node *b)
+{
+	return a->z - b->z;
+}
+
+int item(int i)
+{
+	if (i == p[i])
+		return i;
+	
+	return item(p[i]);
+}
+
+int kruskal(int f)
+{
+
+	int i;
+	int r;
+	int x;
+	int y;
+	
+	for (i = 0, r = 0; i < f; ++i)
+	{
+		x = item(g[i].x);
+		y = item(g[i].y);
+
+		if (x != y)
+			p[y] = p[x], r += g[i].z;
+
+	}
+
+	return r;
+
+}
+int main(){
+    
+	int a;
+	int b;
+	scanf("%d %d", &a, &b);
+
+    int i;
+	for (i = 0; i < b; ++i)
+		scanf("%d %d %d", &g[i].x, &g[i].y, &g[i].z);
+
+	qsort(g, b, sizeof(node), comp);
+
+	for (i = 1; i <=a; ++i)
+		p[i] = i;
+
+	printf("%d\n", kruskal(b));
+	return 0;
+}
