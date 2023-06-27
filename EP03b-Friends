@@ -1,0 +1,211 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct Node {
+    char *data;
+    struct Node* next;
+} Node;
+
+void printList(struct Node* n)
+{
+    while (n != NULL) {
+        printf("%s", n->data);
+        if(n ->next == NULL){
+            break;
+        }
+        else{
+            printf(" ");
+            n = n->next;
+        }
+    }
+}
+
+Node* createNode(char *data) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->data = data;
+    newNode->next = NULL;
+    return newNode;
+}
+
+void InsertFirst(Node *lst, Node *lst1)
+{
+    lst1->next->next->next = lst; 
+}
+
+void BuscaEInsere ( char *n, Node *lst, Node *lst1) {
+    Node *p, *q, *nova, *nova1, *nova2;
+    
+    p = lst;
+    q = lst->next;
+    while (q != NULL &&  strcmp(q->data,n) != 0) {
+        p = q;
+        q = q->next;
+    }
+
+    nova = lst1->next->next;
+    nova->next = q;
+    p->next = nova;
+
+    nova1 = lst1->next;
+    nova1->next = nova;
+    p->next = nova1;
+
+    nova2 = lst1;
+    nova2->next = nova1;
+    p->next = nova2;
+}
+
+
+int main()
+{
+    int i = 0, k = 0;
+    char data[11], data1[11], data2[11], data3[11];
+    char nData[11], nData1[11], nData2[11];
+    char n[11];
+
+    scanf("%s %s %s %s", &data, &data1, &data2, &data3);
+
+    Node *g, *t;
+    Node* head = createNode(data);
+    head->next = createNode(data1);
+    head->next->next = createNode(data2);
+    head->next->next->next = createNode(data3);
+    g = head;
+    t = head;
+
+    scanf("%s %s %s", &nData, &nData1, &nData2);
+    Node* head1 = createNode(nData);
+    if (strcmp(nData,"no") == 0 || strcmp(nData,"nao") == 0 )
+    {
+        printList(head);
+        printf("\n");
+        k++;
+    }
+    else if (strcmp(nData1,"no") == 0 || strcmp(nData1,"nao") == 0 )
+    {
+
+        printList(head);
+        printf(" ");
+        printList(head1);
+        printf("\n");
+        k++;
+
+    }
+    else if (strcmp(nData2,"no") == 0 || strcmp(nData2,"nao") == 0 )
+    {
+        Node* head1 = createNode(nData);
+        head1->next = createNode(nData1);
+        printList(head);
+        printf(" ");
+        printList(head1);
+        printf("\n");
+        k++;
+    }
+    else {
+        Node *p, *q;
+        q = head;
+        while (head != NULL)
+        {
+            if(strcmp(nData,head->data) == 0){
+                printList(head);
+                printf("\n");
+                k++;
+                break;
+            }
+            if(strcmp(nData1,head->data) == 0){
+                if (strcmp(nData1,q->data) == 0)
+                {
+                    head1->next = head;
+                    printList(head1);
+                    printf("\n");
+                    k++;
+                }
+                else
+                {
+                    head1->next = head;
+                    p->next = head1;
+                    printList(p);
+                    printf("\n");
+                    k++;
+                }
+                break;
+            }
+            if(strcmp(nData2,head->data) == 0)
+            {
+                head1->next = createNode(nData1);
+                if (strcmp(nData1,q->data) == 0)
+                {
+                    head1->next = head;
+                    printList(head1);
+                    printf("\n");
+                    k++;
+                }
+                else
+                {
+                    head1->next->next = head;
+                    p ->next = head1;
+                    printList(q);
+                    printf("\n");
+                    k++;
+                }
+
+                break;
+            }
+            p = head;
+            head = head -> next;
+        }
+    }
+
+    head1->next = createNode(nData1);
+    head1->next->next = createNode(nData2);
+    if (k > 0)
+    {
+        return 0;
+    }
+    else{
+        scanf("%s", &n);
+        Node *head2 = createNode(n);
+    if (strcmp(n,"no") == 0 || strcmp(n,"nao") == 0 )
+    {
+        printList(g);
+        printf(" ");
+        printList(head1);
+        printf("\n");
+    }
+    else{
+
+        int y = 0;
+        while (t != NULL)
+        {
+            if (strcmp(t->data,n) == 0)
+            {
+                y++;
+            }
+            t = t->next;
+        }
+        if (y == 0)
+        {
+            printList(g);
+            printf(" ");
+            printList(head1);
+            printf(" ");
+            printf("%s\n", n);
+        }
+        else{
+            if (g != NULL && strcmp(g->data,n) == 0)
+            {
+                InsertFirst(g,head1);
+                printList(head1);
+                printf("\n");
+            }
+            else{
+                BuscaEInsere(n,g,head1);        
+                printList(g);
+                printf("\n");
+            }
+        }
+    }
+    }    
+    return 0;
+}
