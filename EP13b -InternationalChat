@@ -1,0 +1,40 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LANG_LENGTH 20
+
+char* findSpokenLanguage(char languages[][MAX_LANG_LENGTH], int numPeople) {
+    int i, j;
+    int sameLanguageCount = 0;
+
+    for (i = 0; i < numPeople - 1; i++) {
+        for (j = i + 1; j < numPeople; j++) {
+            if (strcmp(languages[i], languages[j]) != 0) {
+                // Se houver pelo menos um par com línguas diferentes, retorna "ingles"
+                return "ingles";
+            }
+        }
+    }
+
+    // Caso contrário, retorna a língua nativa do grupo
+    return languages[0];
+}
+
+int main() {
+    int numTestCases, i, j, numPeople;
+    char languages[100][MAX_LANG_LENGTH];
+
+    scanf("%d", &numTestCases);
+
+    for (i = 0; i < numTestCases; i++) {
+        scanf("%d", &numPeople);
+        for (j = 0; j < numPeople; j++) {
+            scanf("%s", languages[j]);
+        }
+
+        char* spokenLanguage = findSpokenLanguage(languages, numPeople);
+        printf("%s\n", spokenLanguage);
+    }
+
+    return 0;
+}
