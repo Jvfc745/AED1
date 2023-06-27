@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+int buscarPalavra(const char *string, const char *palavra) {
+    int tamanhoString = strlen(string);
+    int tamanhoPalavra = strlen(palavra);
+
+    for (int i = 0; i <= tamanhoString - tamanhoPalavra; i++) {
+        int j;
+        for (j = 0; j < tamanhoPalavra; j++) {
+            if (string[i + j] != palavra[j])
+                break;
+        }
+        if (j == tamanhoPalavra)
+            return 1;  // A palavra foi encontrada
+    }
+
+    return 0;  // A palavra não foi encontrada
+}
+
+ 
+int main() {
+    char a[100001];
+    scanf("%s", &a);
+    if (strlen(a) < 1)
+    {
+    }
+    else{
+        char b[6] = "zelda";
+    for(int i = 0; i < 100000; i++){
+        a[i] = tolower(a[i]);
+    }
+    if (buscarPalavra(a, b)){
+        printf("Link Bolado\n");
+    }
+    else{
+        printf("Link Tranquilo\n");
+    }
+    }
+     return 0;   
+}
