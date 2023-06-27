@@ -1,0 +1,197 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define true 1
+#define false 0
+#define MAXSIZE 100
+
+typedef struct btree{
+	char w;
+	struct btree *esq;
+	struct btree *dir;
+} btree;
+
+char winorder[MAXSIZE] = { 0 };
+char wpostorder[MAXSIZE] = { 0 };
+char wpreorder[MAXSIZE] = { 0 };
+
+int i = 0;
+int j = 0;
+int k = 0;
+
+void teste(btree *node)
+{
+
+	if (node)
+	{
+
+		teste(node->esq);
+		printf("%c ", node->w);
+		teste(node->dir);
+
+	}
+
+}
+btree* push(btree *node, char w)
+{
+
+	if (!node)
+	{
+
+		node = (btree *) malloc(sizeof(btree));
+		node->w = w;
+		node->dir = node->esq = NULL;
+
+	}
+	else if (node->w > w)
+		node->esq = push(node->esq, w);
+	else
+		node->dir = push(node->dir, w);
+
+	return node;
+
+}
+
+_Bool busca(btree *node, char w)
+{
+
+	_Bool dir, esq;
+
+	if (!node)
+		return false;
+
+	if (node->w == w)
+		return true;
+
+	if (node->w > w)
+		esq = busca(node->esq, w);
+	else
+		dir = busca(node->dir, w);
+
+}
+
+void pinfix(char *ws)
+{
+
+	int z;
+	for (z = 0; z < i; ++z)
+		if (!z)
+			printf("%c", winorder[z]);
+		else
+			printf(" %c", winorder[z]);
+
+	i = 0;
+	printf("\n");
+
+}
+
+void pprefix(char *ws)
+{
+
+	int z;
+	for (z = 0; z < k; ++z)
+		if (!z)
+			printf("%c", wpreorder[z]);
+		else
+			printf(" %c", wpreorder[z]);
+
+	k = 0;
+	printf("\n");
+
+}
+
+void ppsfix(char *ws)
+{
+
+	int z;
+	for (z = 0; z < j; ++z)
+		if (!z)
+			printf("%c", wpostorder[z]);
+		else
+			printf(" %c", wpostorder[z]);
+
+	j = 0;
+	printf("\n");
+
+}
+
+void inorder(btree *node)
+{
+
+	if (node)
+	{
+
+		inorder(node->esq);
+		winorder[i++] = node->w;
+		inorder(node->dir);
+
+	}
+
+}
+
+void postorder(btree *node)
+{
+
+	if (node)
+	{
+
+		postorder(node->esq);
+		postorder(node->dir);
+		wpostorder[j++] = node->w;
+
+	}
+
+}
+
+void preorder(btree *node)
+{
+
+	if (node)
+	{
+
+		wpreorder[k++] = node->w;
+		preorder(node->esq);
+		preorder(node->dir);
+
+	}
+
+}
+
+void main ()
+{
+
+	char comando[20], w;
+
+	btree *node = NULL;
+	while (scanf("%s%*c", comando) != EOF)
+	{
+
+		if (strcmp(comando, "I") == 0)
+		{
+
+			scanf("%c", &w);
+			node = push(node, w);
+
+		}
+		else if (strcmp(comando, "inorder") == 0)
+			inorder(node), pinfix(winorder);
+		else if (strcmp(comando, "preorder") == 0)
+			preorder(node), pprefix(wpreorder);
+		else if (strcmp(comando, "P") == 0)
+		{
+
+			scanf("%c", &w);
+			if (busca(node, w))
+				printf("%c existe\n", w);
+			else
+				printf("%c nao existe\n", w);
+
+		}
+		else
+			postorder(node), ppsfix(wpostorder);
+
+	}
+
+}
+
